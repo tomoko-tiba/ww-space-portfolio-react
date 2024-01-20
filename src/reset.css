@@ -1,0 +1,5 @@
+/* reset 重制浏览器默认样式 */
+* {
+    padding: 0;
+    margin: 0;
+}
