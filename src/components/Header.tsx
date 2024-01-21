@@ -2,7 +2,7 @@ import logoSvg from '../assets/pics/logo.svg'
 import searchIcon from '../assets/pics/searchIcon.svg'
 import styles from './Header.module.less'
 
-function Header(){
+const Header: React.FC = () => {
     return(
         <div className={styles.header}>
             <div className={styles.navbar}>
