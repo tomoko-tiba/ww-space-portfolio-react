@@ -1,0 +1,70 @@
+.contentContainer {
+    // flex: 1;
+    // max-width: calc((100% - 36px*3)/4);
+    // min-width: 270px; 
+    width: calc((100% - 36px*2)/3);
+    box-sizing: border-box;
+
+    .shotContainer {
+        height: 0;
+        padding-bottom: 75%;
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+
+        .link {
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            
+            .shotImg {
+                width: 100%;
+                height: 100%;
+                // object-fit: cover;
+                background-color: blue;
+            }
+        }
+    }
+
+    .detailsContainer{
+        margin-top: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .userInfo {
+
+            .hoverableUrl {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+
+                .userPhoto {
+                    width: 24px;
+                    overflow: hidden;
+                    border-radius: 50%;
+                }
+
+                .userName {
+                    margin-left: 8px;
+                    font-family: "Mona Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+                    font-size: 14px;
+                    font-weight: 500;
+                    line-height: 20px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    margin-left: 8px;
+                    color: #0d0c22;
+                }
+            }
+        }
+
+        .statistics {
+
+        }
+    }
+}

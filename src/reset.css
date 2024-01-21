@@ -4,6 +4,15 @@
     margin: 0;
 }
 
+ul, ol {
+    list-style: none;
+}
+
+body {
+    min-width: 1000px;
+    overflow: auto;
+}
+
 @font-face{
     font-family: 'Mona Sans';
     src:  url('/fonts/Mona-Sans.woff2') format('woff2'), /* Super Modern Browsers */
