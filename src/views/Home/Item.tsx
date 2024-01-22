@@ -1,12 +1,18 @@
 import styles from './Item.module.less'
+import likeIcon from '@/assets/pics/likeIcon.svg'
 
 export interface Data {
-    itemLink: string;
-    imgSrc: string;
+    id: number
+    userName: string;
     userSrc: string 
     userPhoto: string;
-    userName: string;
+    title: string;
+    imgSrc: string;
+    itemLink: string;
+    likes: number;
+    views: number;
 }
+
 //imgSrc, itemLink, userSrc, userPhoto, userName
 
 const Item: React.FC< {data: Data} >= ({ data }) => {
@@ -27,7 +33,10 @@ const Item: React.FC< {data: Data} >= ({ data }) => {
 
                 </div>
                 <div className={styles.statistics}>
-                    <span>like</span>
+                    <div className={styles.likeState}>
+                        <img src={likeIcon} />
+                        <span>{data.likes}</span>
+                    </div>
                 </div>
             </div>
         </li>
