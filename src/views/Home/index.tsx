@@ -1,42 +1,55 @@
-import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import Item from '@/views/Home/Item'
 import styles from './index.module.less'
-import userData from '@/assets/contentsData/userData.jsx'
-import { useState } from 'react'
+import userData, { Data } from '@/assets/contentsData/userData'
+import { useState, useEffect } from 'react'
+import { useInView } from 'react-intersection-observer'
 
 function Home(){
-    const loadOnceAmount = 9;
+    const loadOnceAmount = 12;
     const [currDisplayCount, setCurrDisplayCount] = useState(loadOnceAmount);
+    const visibleData: Data[] = userData.slice(0, currDisplayCount);
+    const isFinishedLoading: boolean = currDisplayCount >= userData.length;
 
-    const listItems = userData.map((data, i) => { 
-        if(i < currDisplayCount){
-            return <Item data={data} key={data.id}/>
+    const { ref, inView } = useInView({
+        threshold: 1,
+    });
+    
+    useEffect(() => {
+        let ignore = false;
+        console.log('useEffect');
+
+        function handleLoading() {
+            setTimeout(() => {
+                if(!ignore){
+                    const newCount = currDisplayCount + loadOnceAmount;
+                    setCurrDisplayCount(newCount);
+                    console.log('currCount  :'+newCount);
+                }
+            }, 3000);
         }
-    })
 
-    function handleOnclickLoad(){
-        const newCount = currDisplayCount + loadOnceAmount;
-        setCurrDisplayCount(newCount);
-        console.log(newCount);
-        console.log(currDisplayCount, loadOnceAmount);
-    }
+        if(inView && !isFinishedLoading ){
+            handleLoading();
+        }
+
+        return () => {
+            ignore = true;
+            console.log('cancel');
+        }
+    }, [inView, isFinishedLoading, currDisplayCount]);
 
     return(
         <>
-            <Header />
             <div className={styles.main}>
                 <ol className={styles.contentsList}>
-                    {listItems}
+                    {visibleData.map(data => <Item data={data} key={data.id}/>)}
                 </ol>
             </div>
             <div className={styles.loadMoreButton}>
-                <button className={styles.button} onClick={handleOnclickLoad}>Load more</button>
+                {!isFinishedLoading && <button className={styles.button} onClick={() => setCurrDisplayCount(c => c + loadOnceAmount)} ref={ref}>Load more</button>}
             </div>
-            <Footer />
         </>
     )
 }
 
-
-export default Home
+export default Home;

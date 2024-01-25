@@ -1,4 +1,15 @@
-import {Data} from '@/views/Home/Item.tsx'
+export interface Data {
+    id: number
+    userName: string;
+    userSrc: string 
+    userPhoto: string;
+    title: string;
+    imgSrc: string;
+    itemLink: string;
+    likes: number;
+    views: number;
+}
+
 
 const userData: Data[] = [
     {

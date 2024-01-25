@@ -1,8 +1,14 @@
 .footerContainer {
     padding: 0 40px 0 40px;
     font-family: "Mona Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     .upperContainer {
+        width: 100%;
+        max-width: 1200px;
         padding: 72px 0 44px 0;
         display: flex;
         justify-content: space-between;
@@ -37,9 +43,12 @@
         }
     }
     .lowerContainer {
+        width: 100%;
+        max-width: 1200px;
         display: flex;
         justify-content: space-between;
         padding: 0 0;
+        margin-bottom: 20px;
 
         .lowerList {
             display: flex;
