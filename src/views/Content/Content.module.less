@@ -1,6 +1,9 @@
 .main {
     padding: 64px 120px 64px 120px;
     font-family: "Mona Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     .contentContainer {
         display: flex;
@@ -17,16 +20,19 @@
             font-size: 24px;
             line-height: 29px;
             font-weight: 600;
-            
+            margin-bottom: 10px;
         }
 
         .infoBar {
             width: 100%;
             max-width: 1024px;
             height: 48px;
+            margin-top: 14px;
+            margin-bottom: 10px;
 
             display: flex;
             justify-content: space-between;
+            align-items: center;
 
             .info {
                 width: 100%;
@@ -74,6 +80,134 @@
                 }
             }
 
+            .infoRight {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                gap: 12px;
+
+            }
+
+
         }
+
+        .mediaHeader {
+            margin: 24px 0px 36px 0;
+            max-width: 1024px;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1024/768;
+            max-height: 768px;
+            overflow: hidden;
+            border-radius: 8px;
+
+            .videoPlayer {
+                position: relative;
+                width: 100%;
+                height: 100%;
+
+                .video {
+                    width: 100%;
+                    height: 100%;
+                    z-index: 1;
+                }
+
+                .progressBar {
+
+                }
+
+                .toggleMuteButton {
+                    position: absolute;
+                    left: 20px;
+                    bottom: 24px;
+                    background-color: #fff;
+                    width: 48px;
+                    height: 48px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 50%;
+
+                    button {
+                        width: 24px;
+                        height: 24px;
+                        padding-left: 10px;
+                    }
+
+                }
+            }
+        }
+
+        .contentContainer {
+            width: 100%;
+            max-width: 752px;
+            margin: 36px 0;
+        }
+
+        .userDetails {
+            margin-top: 70px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .photo_detail {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                span {
+                    width: 100%;
+                    border: 1px solid #e7e7e9;
+                }
+
+                img {
+                    width: 72px;
+                    height: 72px;
+                    margin: 0 24px;
+                }
+            }
+
+            .name_detail {
+                font-size: 20px;
+                font-weight: 500;
+                line-height: 29px;
+                margin-top: 16px;
+                color: #0d0c22;
+            }
+
+            .intro_detail {
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 20px;
+                max-width: 400px;
+                margin-top: 8px;
+                color: #3d3d4e;
+                text-align: center;
+                margin-bottom: 16px;
+            }
+        }
+    }
+}
+
+
+.likeAction {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border: 1.5px solid #e7e7e9;
+    cursor: pointer;
+
+    &:hover {
+        border-color: #dbdbde;
+    } 
+
+    .likeIcon {
+        width: 16px;
+        height: 16px;
     }
 }
