@@ -7,14 +7,10 @@ import { GetWorkByPage, Work } from '@/api/works'
 
 function Home(){
     const loadOnceAmount = 12;
-
+    // 画面在加载
     const [isLoading, setIsLoading] = useState(false); 
-    /*
-    // 用于一次获取所有数据
-    const [userData, setUserData] = useState<Work[]>([])
-    const visibleData: Work[] = userData.slice(0, currDisplayCount);
-    const isFinished: boolean = currDisplayCount >= userData.length;
-    */
+    // 数据在请求
+    const [isFetchingData, setIsFetchingData] = useState(false)
 
     // 用于逐次获取数据
     const [visibleData, setVisibleData] = useState<Work[]>([]);
@@ -29,34 +25,12 @@ function Home(){
         onChange(inView) {
             if(inView){
                 console.log('inView');
+                setIsLoading(true);
                 fetchPageData();
             }
         },
     });
 
-    
-    /*
-    // 一次获得所有数据
-    useEffect(() => {
-        let ignore = false;
-        setIsLoading(true);
-
-        getWorks().then(res => {
-            if(!ignore){
-                const data = res.data;
-                setUserData(data);
-                setIsLoading(false);
-            }
-        })
-
-        GetWorkByPage()
-
-
-        return () => {
-            ignore = true;
-        }
-    }, [])
-    */
     // 逐次获取数据
     function fetchPageData() {
         console.log('Try to fetch');
@@ -73,57 +47,13 @@ function Home(){
             const count = data.count;
             setVisibleData([...visibleData, ...pageData]);
             setCurrPage(toLoadPage);
-            setIsFinished(currPage*loadOnceAmount >= count);
+            setIsFinished(currPage >= count/loadOnceAmount - 1);
             setIsLoading(false);
         }).finally(() => {
             console.log('加载数据及渲染成功！本次加载数据的页码是', toLoadPage);
-            console.log('isLoading :', isLoading);
+            //console.log('isLoading :', isLoading);
         })
-    }
-
-    /* 
-    // 废弃useEffect方法
-    useEffect(() => {
-        let ignore = false;
-
-        setIsLoading(true);
-
-        const toLoadPage = currPage + 1;
-        GetWorkByPage({
-            page: toLoadPage,
-            pageSize: loadOnceAmount
-        }).then(res => {
-            if(ignore){
-                return
-            }
-            const data = res.data;
-            const pageData = data.data;
-            const count = data.count;
-            setVisibleData([...visibleData, ...pageData]);
-            setCurrPage(toLoadPage);
-            setIsFinished(currPage*loadOnceAmount >= count);
-            setIsLoading(false);
-        })
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-        /* // 当只使用模拟数据时
-        function handleLoading() {
-            setTimeout(() => {
-                if(!ignore){
-                    const newCount = currPage + loadOnceAmount;
-                    setCurrDisplayCount(newCount);
-                    console.log('currCount  :'+newCount);
-                }
-            }, 3000);
-        }
-        if(inView && !isLoading ){
-            handleLoading();
-        }
-        return () => {
-            ignore = true;
-            console.log('cancel');
-        }
-    }, [inView, isLoading]);
-    */   
+    } 
 
     return(
         <>
@@ -133,7 +63,8 @@ function Home(){
                 </ol>
             </div>
             <div className={styles.loadMoreButton}>
-                {isLoading ? '加载中...' : <DetectLoadingArea detectRef={ref} key={currPage}/>}
+            { isLoading && !isFinished && 'Loading' }
+            { !isLoading && !isFinished && <DetectLoadingArea detectRef={ref} key={currPage}/>}
             </div>   
         </>
     )
@@ -141,7 +72,9 @@ function Home(){
 
 function DetectLoadingArea ({detectRef}) {
     return(
-        <div ref={detectRef} className={styles.detectArea}><div>Detecting</div></div>
+        <div ref={detectRef} className={styles.detectArea}>
+            <div>Detecting</div>
+        </div>
     )
 }
 
