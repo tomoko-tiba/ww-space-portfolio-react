@@ -42,3 +42,12 @@ export const GetWorkByPage = ({ page, pageSize }: GetWorkByPagesProps) => {
         },
     });
 };
+
+export const GetWorkById = (id: string) => {
+    return axios<Work>({
+        method: "GET",
+        url: `http://localhost:3000/works/${id}`,
+    });
+}
+
+

@@ -1,9 +1,13 @@
 import styles from './Content.module.less'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import HtmlComp from './HtmlComp';
 import GetInTouchIcon from '@/components/GetInTouchIcon';
+import { useParams } from 'react-router-dom';
+import { Work, GetWorkById } from '@/api/works';
+import { useNavigate } from 'react-router-dom';
 
 const Content: React.FC = () => {
+    /*
     const title: string = 'Shadows & Silhouettes';
     const userName: string = 'Biondic Vladimir';
     const userIntro: string ='Ready for teamwork';
@@ -11,29 +15,61 @@ const Content: React.FC = () => {
     const userPage = 'https://dribbble.com/Biondic';
     const likes: number = 100;
     const time = new Date('2022-01-01T12:00:00');
+    */
     const [isMuted, setIsMuted] = useState(false);
+    const params = useParams();
+    const [data, setData] = useState<Work | null>(null);
+
+    const navigate = useNavigate();
     
+    useEffect(() => {
+        let ignore = false;
+
+        GetWorkById(String(params.id)).then(res => {
+            if(ignore){
+                return;
+            }
+            setData(res.data); 
+            console.log('content 请求成功')
+
+        }).catch( err => {
+            if(ignore){
+                return;
+            }
+            const res = err.response;
+            if(res?.status === 404){
+                console.log(404);
+                navigate('/404');
+            }
+        })
+
+        return ()=> {
+            ignore = true;
+        }
+    }, [params.id, navigate])
 
     return (
+        <>
+        {!data ? 'Loading...' : 
         <div className={styles.main}>
             <div className={styles.contentContainer}>
                 {/* 标题 */}
                 <div className={styles.title}>
-                    <span className={styles.titleText}>{title}</span>
+                    <span className={styles.titleText}>{data.title}</span>
                 </div>
                 {/* 信息栏  */}
                 <div className={styles.infoBar}>
                     <div className={styles.info}>
                         <div className={styles.userPhoto}>
-                            <a href={userPage}>
-                                <img src={userPhoto} />
+                            <a href={data.userSrc}>
+                                <img src={data.userPhoto} />
                             </a>
                         </div>
                         <div className={styles.details}>
-                            <div className={styles.userName}>{userName}</div>
+                            <div className={styles.userName}>{data.userName}</div>
                             <div className={styles.status}>
-                                <span className={styles.like}>Likes:  {likes}</span>
-                                <span className={styles.time}>{time.toLocaleString()}</span>
+                                <span className={styles.like}>Likes:  {data.likes}</span>
+                                <span className={styles.time}>{data.time}</span>
                             </div>
                         </div>
                     </div>
@@ -60,16 +96,18 @@ const Content: React.FC = () => {
                 <div className={styles.userDetails}>
                     <div className={styles.photo_detail}>
                         <span className={styles.userLine}></span>
-                        <img alt="Biondic Vladimir" src={userPhoto}></img>
+                        <img src={data.userPhoto}></img>
                         <span className={styles.userLine}></span>
                     </div>
-                    <div className={styles.name_detail}>{userName}</div>
-                    <div className={styles.intro_detail}>{userIntro}</div>
+                    <div className={styles.name_detail}>{data.userName}</div>
+                    <div className={styles.intro_detail}>{data.userIntro}</div>
                     <GetInTouchIcon />
                 </div>
                 
             </div>
         </div>
+        }
+        </>
     )
 }
 

@@ -1,4 +1,5 @@
 import styles from './Item.module.less';
+import { useNavigate } from 'react-router-dom';
 
 export interface Data {
     id: number
@@ -15,8 +16,19 @@ export interface Data {
 //imgSrc, itemLink, userSrc, userPhoto, userName
 
 const Item: React.FC< {data: Data} >= ({ data }) => {
+
+
+    //路由跳转
+    const navigate = useNavigate();
+
+    function toDetail(){
+        console.log('请求id为'+data.id)
+        const navPath: string = '/Content/'+data.id;
+        navigate(navPath)
+    }
+
     return(
-        <li className={styles.contentContainer}>
+        <li className={styles.contentContainer} onClick={toDetail}>
             <div className={styles.shotContainer}>
                 <a className={styles.link} href={data.itemLink} >
                     <img className={styles.shotImg} src={data.imgSrc} />

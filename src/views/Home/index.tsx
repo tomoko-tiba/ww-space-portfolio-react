@@ -1,7 +1,7 @@
 import Item from '@/views/Home/Item'
 import styles from './index.module.less'
 
-import { useState } from 'react'
+import { useState, LegacyRef } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { GetWorkByPage, Work } from '@/api/works'
 
@@ -9,8 +9,6 @@ function Home(){
     const loadOnceAmount = 12;
     // 画面在加载
     const [isLoading, setIsLoading] = useState(false); 
-    // 数据在请求
-    const [isFetchingData, setIsFetchingData] = useState(false)
 
     // 用于逐次获取数据
     const [visibleData, setVisibleData] = useState<Work[]>([]);
@@ -64,13 +62,16 @@ function Home(){
             </div>
             <div className={styles.loadMoreButton}>
             { isLoading && !isFinished && 'Loading' }
-            { !isLoading && !isFinished && <DetectLoadingArea detectRef={ref} key={currPage}/>}
+            { !isLoading && !isFinished && <DetectLoadingArea detectRef={ref} />}
             </div>   
         </>
     )
 }
+interface DetectLoadingAreaProps {
+    detectRef: LegacyRef<HTMLDivElement>; // 将 detectRef 声明为可选属性
+}
 
-function DetectLoadingArea ({detectRef}) {
+function DetectLoadingArea ({ detectRef }: DetectLoadingAreaProps ) {
     return(
         <div ref={detectRef} className={styles.detectArea}>
             <div>Detecting</div>

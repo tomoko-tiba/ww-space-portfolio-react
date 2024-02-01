@@ -7,6 +7,8 @@ import NotFound404 from './views/404.tsx'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 function App() {
+
+  //           <Route path="*" element={<Navigate to="/404" />} />
   return (
     <>
       <Header/>
@@ -15,7 +17,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Navigate to="/404" />} />
           <Route path="/404" element={<NotFound404/>} />
-          <Route path="/Content" element={<Content />} />
+          <Route path="/Content/:id" element={<Content />} />
         </Routes>
       </Router>
       <Footer/>
