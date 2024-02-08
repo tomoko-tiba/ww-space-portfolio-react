@@ -16,6 +16,7 @@ function Home(){
 
     // 所有数据加载完成
     const [isFinished, setIsFinished] = useState(false);
+    const isAutoLoad = (currPage - 1) % 3 !== 0;
 
     const params = useParams();
 
@@ -36,7 +37,7 @@ function Home(){
             const pageData = data.data;
             const count = data.count;
             setVisibleData([...pageData]);
-            setIsFinished(currPage >= count/loadOnceAmount - 1);
+            setIsFinished( count/loadOnceAmount <= 1);
             setIsLoading(false);
             console.log(params.text + '  ' + typeof(params.text));
             console.log('搜索数据成功！');
@@ -54,7 +55,7 @@ function Home(){
             if(inView){
                 console.log('inView');
                 setIsLoading(true);
-                if(currPage>1) fetchPageData(currPage);
+                if(currPage>1 && isAutoLoad) fetchPageData(currPage);
             }
         },
     });
@@ -78,7 +79,7 @@ function Home(){
             }else {
                 setVisibleData([...visibleData, ...pageData]);
             }
-            setIsFinished(currPage >= count/loadOnceAmount - 1);
+            setIsFinished(currPage >= count/loadOnceAmount);
             setIsLoading(false);
             console.log('fetch成功！本次加载数据的页码是', currPage);
             setCurrPage(pageCount+1);
@@ -118,7 +119,8 @@ function Home(){
                 </ol>
             </div>
             <div className={styles.loadMoreButton}>
-            { isLoading && !isFinished && 'Loading' }
+            { !isAutoLoad && <div className={styles.loadMoreButton} ><button className={styles.button} onClick={() => fetchPageData(currPage)}>Load more work</button></div> }
+            { isLoading && !isFinished && isAutoLoad && 'Loading' }
             { !isLoading && !isFinished && <DetectLoadingArea detectRef={ref} />}
             </div>  
         </>
