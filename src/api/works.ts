@@ -25,6 +25,7 @@ export const getWorks = () => {
 export interface GetWorkByPagesProps {
     page: number;
     pageSize: number;
+    searchText?: string
 }
 
 export interface GetWorkByPagesRes {
@@ -32,13 +33,14 @@ export interface GetWorkByPagesRes {
     data: Work[];
 }
 
-export const GetWorkByPage = ({ page, pageSize }: GetWorkByPagesProps) => {
+export const GetWorkByPage = ({ page, pageSize, searchText }: GetWorkByPagesProps) => {
     return axios<GetWorkByPagesRes>({
         method: "GET",
         url: "http://localhost:3000/works/pages",
         params: {
             page,
             pageSize,
+            searchText,
         },
     });
 };
