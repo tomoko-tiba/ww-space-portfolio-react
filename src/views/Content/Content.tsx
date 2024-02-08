@@ -2,9 +2,8 @@ import styles from './Content.module.less'
 import { useEffect, useState } from 'react';
 import HtmlComp from './HtmlComp';
 import GetInTouchIcon from '@/components/GetInTouchIcon';
-import { useParams } from 'react-router-dom';
 import { Work, GetWorkById } from '@/api/works';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Content: React.FC = () => {
     /*
@@ -17,9 +16,8 @@ const Content: React.FC = () => {
     const time = new Date('2022-01-01T12:00:00');
     */
     const [isMuted, setIsMuted] = useState(false);
-    const params = useParams();
     const [data, setData] = useState<Work | null>(null);
-
+    const params = useParams();
     const navigate = useNavigate();
     
     useEffect(() => {
@@ -50,7 +48,7 @@ const Content: React.FC = () => {
 
     return (
         <>
-        {!data ? 'Loading...' : 
+        {!data ? <div className={styles.loading}>Loading...</div> : 
         <div className={styles.main}>
             <div className={styles.contentContainer}>
                 {/* 标题 */}

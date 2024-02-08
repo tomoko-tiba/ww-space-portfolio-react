@@ -12,28 +12,20 @@ function Home(){
 
     // 用于逐次获取数据
     const [visibleData, setVisibleData] = useState<Work[]>([]);
-    const [currPage, setCurrPage] = useState(1);
+    const [currPage, setCurrPage] = useState<number>(1);
 
     // 所有数据加载完成
     const [isFinished, setIsFinished] = useState(false);
 
-    // const searchInputRef = useRef<HTMLInputElement>(null);
-    // const [searchText, setSearchText] = useState<string>('');
-
     const params = useParams();
 
     useEffect(() => {
-        console.log('reload')
-        if(!params.text){
-            setCurrPage(1);
-        }
-    },[])
-    
-    useEffect(() => {
         let ignore = false;
         setIsLoading(true);
+        setIsFinished(false);
         console.log('currPage :'+currPage);
         console.log('search and first fetch');
+        // 这里没有办法直接使用fetchPageData()替代,因为无法使用ignore阻止两次运行fetch data
         GetWorkByPage({
             page: 1,
             pageSize: loadOnceAmount,
@@ -54,49 +46,6 @@ function Home(){
             ignore = true;
         }
     }, [params.text])
-/*
-    useEffect(()=>{
-        let ignore = false;
-        if(isFinished && isLoading){
-            return
-        }
-        console.log('Try to fetch');
-        // const toLoadPage = currPage + 1;
-        GetWorkByPage({
-            page: currPage,
-            pageSize: loadOnceAmount,
-            searchText: params.text
-        }).then(res => {
-            if(ignore){
-                console.log(`then ignore! page: ${currPage}, searchText: ${params.text}`);
-                return
-            }
-            const data = res.data;
-            const pageData = data.data;
-            const count = data.count;
-
-            if(currPage === 1 || params.text) {
-                setVisibleData([...pageData]);
-                console.log('first');
-            }else {
-                setVisibleData([...visibleData, ...pageData]);
-                console.log('second');
-            }
-            setVisibleData([...visibleData, ...pageData]);
-            // setCurrPage(toLoadPage);
-            setIsFinished(currPage >= count/loadOnceAmount - 1);
-            setIsLoading(false);
-        }).finally(() => {
-            if(ignore){
-                return
-            }
-            console.log('加载数据及渲染成功！本次加载数据的页码是', currPage);
-            // console.log('isLoading :', isLoading);
-        })
-        return()=> {
-            ignore = true;
-        }
-    }, [currPage])*/
 
     const { ref } = useInView({
         threshold: 1,
@@ -105,18 +54,42 @@ function Home(){
             if(inView){
                 console.log('inView');
                 setIsLoading(true);
-                fetchPageData();
+                if(currPage>1) fetchPageData(currPage);
             }
         },
     });
     
     // 逐次获取数据
-    function fetchPageData(){
+    const fetchPageData = useCallback((pageCount: number) => {
         if(isFinished && isLoading){
             return
         }
         console.log('Try to fetch');
-        // const toLoadPage = currPage + 1;
+        GetWorkByPage({
+            page: pageCount,
+            pageSize: loadOnceAmount,
+            searchText: params.text
+        }).then(res => {
+            const data = res.data;
+            const pageData = data.data;
+            const count = data.count;
+            if(currPage === 1) {
+                setVisibleData([...pageData]);
+            }else {
+                setVisibleData([...visibleData, ...pageData]);
+            }
+            setIsFinished(currPage >= count/loadOnceAmount - 1);
+            setIsLoading(false);
+            console.log('fetch成功！本次加载数据的页码是', currPage);
+            setCurrPage(pageCount+1);
+        })
+    },[currPage, isFinished, isLoading, params.text, visibleData])
+    /*
+    function fetchPageData (){
+        if(isFinished && isLoading){
+            return
+        }
+        console.log('Try to fetch');
         GetWorkByPage({
             page: currPage,
             pageSize: loadOnceAmount,
@@ -125,19 +98,17 @@ function Home(){
             const data = res.data;
             const pageData = data.data;
             const count = data.count;
-            if(currPage === 0) {
+            if(currPage === 1) {
                 setVisibleData([...pageData]);
             }else {
                 setVisibleData([...visibleData, ...pageData]);
             }
-            //setVisibleData([...visibleData, ...pageData]);
-            // setCurrPage(toLoadPage);
             setIsFinished(currPage >= count/loadOnceAmount - 1);
             setIsLoading(false);
             console.log('fetch成功！本次加载数据的页码是', currPage);
             setCurrPage(c => c+1);
         })
-    }
+    }*/
     
     return(
         <>
@@ -148,7 +119,7 @@ function Home(){
             </div>
             <div className={styles.loadMoreButton}>
             { isLoading && !isFinished && 'Loading' }
-            { !isLoading && !isFinished && <DetectLoadingArea detectRef={ref} key={currPage}/>}
+            { !isLoading && !isFinished && <DetectLoadingArea detectRef={ref} />}
             </div>  
         </>
     )
