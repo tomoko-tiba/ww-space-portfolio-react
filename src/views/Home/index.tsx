@@ -122,7 +122,7 @@ function Home(){
                             }
                             return {
                                 ...item,
-                                likes: action === 'unlike' ? item.likes - 1 : item.likes + 1
+                                likes: action === 'unlike' ? ( item.likes > 0 ? item.likes - 1 : 0 ) : item.likes + 1
                             }
                         }))
                     }}/>)}
