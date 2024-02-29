@@ -1,6 +1,6 @@
 import styles from './Item.module.less';
 import { useNavigate } from 'react-router-dom';
-
+import LikeIcon from '@/components/LikeIcon';
 export interface Data {
     id: number
     userName: string;
@@ -13,10 +13,15 @@ export interface Data {
     views: number;
 }
 
+interface itemProps {
+    data: Data;
+    onLikeChange: (action: string) => void
+}
+
 //imgSrc, itemLink, userSrc, userPhoto, userName
 
-const Item: React.FC< {data: Data} >= ({ data }) => {
-
+const Item: React.FC< itemProps >= ( props ) => {
+    const { data, onLikeChange } = props;
 
     //路由跳转
     const navigate = useNavigate();
@@ -28,19 +33,17 @@ const Item: React.FC< {data: Data} >= ({ data }) => {
     }
 
     return(
-        <li className={styles.contentContainer} onClick={toDetail}>
-            <div className={styles.shotContainer}>
+        <li className={styles.contentContainer}>
+            <div className={styles.shotContainer} onClick={toDetail}>
                 <a className={styles.link} href={data.itemLink} >
                     <img className={styles.shotImg} src={data.imgSrc} />
                 </a>
                 <div className={styles.overlay}>
                     <div className={styles.overlayContent}>
                         <div className={styles.title}>{data.title}</div>
-                        <div className={styles.action}>
                             <div className={styles.likeAction}>
-                                <LikeIcon />
+                                <LikeIcon type={"big"} workId={data.id} onChange={onLikeChange}/>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -55,7 +58,7 @@ const Item: React.FC< {data: Data} >= ({ data }) => {
                 </div>
                 <div className={styles.statistics}>
                     <div className={styles.likeState}>
-                        <LikeIcon />
+                        <LikeIcon type={"small"} workId={data.id} onChange={onLikeChange}/>
                         <span className={styles.likeCount}>{data.likes}</span>
                     </div>
                     <div className={styles.viewState}>
@@ -67,14 +70,15 @@ const Item: React.FC< {data: Data} >= ({ data }) => {
         </li>
     )
 }
-
-function LikeIcon () {
+/*
+const LikeIcon = (styleName: CSSModuleClasses[string]) => {
+    // styles.likeIcon
     return(
-        <svg className={styles.likeIcon} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" role="img">
+        <svg className={styleName} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" role="img">
             <path d="M10.7408 2C13.0889 2 14.6667 4.235 14.6667 6.32C14.6667 10.5425 8.11856 14 8.00004 14C7.88152 14 1.33337 10.5425 1.33337 6.32C1.33337 4.235 2.91115 2 5.2593 2C6.60745 2 7.48893 2.6825 8.00004 3.2825C8.51115 2.6825 9.39263 2 10.7408 2Z" stroke="currentColor" ></path>
         </svg>
     )
-}
+}*/
 
 function ViewIcon () {
     return(

@@ -18,7 +18,7 @@ export interface Work {
 export const getWorks = () => {
     return axios<Work[]>({
         method: "GET",
-        url: "http://localhost:3000/works",
+        url: "/backend/works",
     })
 }
 
@@ -36,7 +36,7 @@ export interface GetWorkByPagesRes {
 export const GetWorkByPage = ({ page, pageSize, searchText }: GetWorkByPagesProps) => {
     return axios<GetWorkByPagesRes>({
         method: "GET",
-        url: "http://localhost:3000/works/pages",
+        url: "/backend/works/pages",
         params: {
             page,
             pageSize,
@@ -48,8 +48,14 @@ export const GetWorkByPage = ({ page, pageSize, searchText }: GetWorkByPagesProp
 export const GetWorkById = (id: string) => {
     return axios<Work>({
         method: "GET",
-        url: `http://localhost:3000/works/${id}`,
+        url: `/backend/works/${id}?flag=client`,
     });
 }
 
-
+export const like = (id: number, action: 'like' | 'unlike') => {
+    return axios<void>({
+        method: 'PUT',
+        url: `/backend/works/${id}/like`,
+        data: { action }
+    })
+}

@@ -1,0 +1,48 @@
+.smallLike {
+    width: 16px;
+    height: 16px;
+
+    .likeIcon {
+        width: 16px;
+        height: 16px;
+        color: #9e9ea7;
+        margin-right: 4px;
+        fill: currentColor;
+    }
+
+    &:hover,
+    &.active {
+        .likeIcon {
+            color: #ea64d9;
+            fill: currentColor;
+        }
+    }
+}
+
+.bigLike {
+    width: 40px;
+    height: 40px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: #0d0c22;
+
+    .likeIcon {
+        width: 16px;
+        height: 16px;
+    }
+
+    &:hover {
+        color: #6e6d7a;
+    }
+
+    &.active {
+        background-color: #fdf0fb;
+        .likeIcon {
+            color: #ea64d9;
+            fill: currentColor;
+        }
+    }
+}

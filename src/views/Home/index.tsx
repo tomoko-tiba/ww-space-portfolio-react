@@ -49,7 +49,7 @@ function Home(){
     }, [params.text])
 
     const { ref } = useInView({
-        threshold: 1,
+        threshold: 0,
         triggerOnce: true,
         onChange(inView) {
             if(inView){
@@ -115,7 +115,17 @@ function Home(){
         <>
             <div className={styles.main}>
                 <ol className={styles.contentsList}>
-                    {visibleData.map(data => <Item data={data} key={data.id}/>)}
+                    {visibleData.map(data => <Item data={data} key={data.id} onLikeChange={action => {
+                        setVisibleData(visibleData.map(item => {
+                            if(item.id != data.id) {
+                                return item
+                            }
+                            return {
+                                ...item,
+                                likes: action === 'unlike' ? item.likes - 1 : item.likes + 1
+                            }
+                        }))
+                    }}/>)}
                 </ol>
             </div>
             <div className={styles.loadMoreButton}>
