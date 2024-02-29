@@ -15,7 +15,7 @@ const Content: React.FC = () => {
     const likes: number = 100;
     const time = new Date('2022-01-01T12:00:00');
     */
-    const [isMuted, setIsMuted] = useState(false);
+    // const [isMuted, setIsMuted] = useState(false);
     const [data, setData] = useState<Work | null>(null);
     const params = useParams();
     const navigate = useNavigate();
@@ -77,6 +77,7 @@ const Content: React.FC = () => {
                     </div>
                 </div>
                 {/* 头图 */}
+                {/**  视频版
                 <div className={styles.mediaHeader}>
                     <div className={styles.videoPlayer}>
                         <video className={styles.video} preload="auto" src="https://cdn.dribbble.com/userupload/12617184/file/original-ec1cf0981b84ce8e15c20f2422737ae4.mp4"  draggable="false" ></video>
@@ -85,10 +86,15 @@ const Content: React.FC = () => {
                             { isMuted ? <MuteButton/> : <UnmuteButton/> }
                         </div>
                     </div>
-                </div>
+                </div> */}
+                <div className={styles.mediaHeader}>
+                    <div className={styles.imgHeader}>
+                        <img src={data.imgSrc} ></img>
+                    </div>
+                </div> 
                 {/* 正文 */}
                 <div className={styles.contentContainer}>
-                    <HtmlComp />
+                    <HtmlComp htmlContent={data.content}/>
                 </div>
                 {/* 介绍 */}
                 <div className={styles.userDetails}>
@@ -118,7 +124,7 @@ function LikeIcon () {
         </div>
     )
 }
-
+/*
 function MuteButton (){
     return(
         <svg height="24" fill="currentColor" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg" svg-inline="" role="presentation" focusable="false">
@@ -136,6 +142,6 @@ function UnmuteButton (){
     )
 }
 
-
+*/
 
 export default Content;
