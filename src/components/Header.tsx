@@ -38,7 +38,7 @@ const Header: React.FC<HeaderProps> = ( {searchValue, onSearchChange} ) => {
                         <input className={styles.search_input} value={searchValue} placeholder='Search...' autoComplete='off' 
                                 onKeyDown={e => e.key === 'Enter' && handleSearchSubmit(e)} onChange={e => onSearchChange(e.target.value) }/>
                     </form>
-                    <img className={styles.user} src='https://cdn.dribbble.com/users/18747275/avatars/normal/data?1705567610' width={45} height={45}/>
+
                 </div>
             </div>
         </div>

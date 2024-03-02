@@ -4,12 +4,22 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0 120px 0 120px;
+
+    @media (max-width: 920px){
+        padding: 0 16px 0 16px;
+    }
 
     .contentContainer {
         display: flex;
         flex-direction: column;
         align-items: center;
-        max-width: 1172px;
+        min-width: 670px;
+        
+        @media (max-width: 920px){
+            width: 100%;
+            min-width: 100%;
+        }
 
         .title {
             height: 29px;
@@ -20,6 +30,9 @@
             line-height: 29px;
             font-weight: 600;
             margin-bottom: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .infoBar {
@@ -93,6 +106,15 @@
                 align-items: center;
                 gap: 12px;
                 margin-left: 20px;
+
+                .likeAction {
+                    border-radius: 50%;
+                    border: 1.5px solid #e7e7e9;
+                
+                    &:hover {
+                        border-color: #dbdbde;
+                    } 
+                }
             }
 
 
@@ -107,6 +129,12 @@
             max-height: 768px;
             overflow: hidden;
             border-radius: 8px;
+
+            @media (max-width: 768px){
+                width: calc(100% + 32px);
+                overflow: hidden;
+                border-radius: 0px;
+            }
 
             .imgHeader{
                 position: relative;
@@ -209,27 +237,6 @@
                 margin-bottom: 16px;
             }
         }
-    }
-}
-
-
-.likeAction {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    border: 1.5px solid #e7e7e9;
-    cursor: pointer;
-
-    &:hover {
-        border-color: #dbdbde;
-    } 
-
-    .likeIcon {
-        width: 16px;
-        height: 16px;
     }
 }
 

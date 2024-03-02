@@ -4,17 +4,9 @@ import HtmlComp from './HtmlComp';
 import GetInTouchIcon from '@/components/GetInTouchIcon';
 import { Work, GetWorkById } from '@/api/works';
 import { useNavigate, useParams } from 'react-router-dom';
+import LikeIcon from '@/components/LikeIcon';
 
 const Content: React.FC = () => {
-    /*
-    const title: string = 'Shadows & Silhouettes';
-    const userName: string = 'Biondic Vladimir';
-    const userIntro: string ='Ready for teamwork';
-    const userPhoto: string = 'https://cdn.dribbble.com/users/614348/avatars/normal/82403b2913580cf795f8823cf0ba8be5.png?1696330794';
-    const userPage = 'https://dribbble.com/Biondic';
-    const likes: number = 100;
-    const time = new Date('2022-01-01T12:00:00');
-    */
     // const [isMuted, setIsMuted] = useState(false);
     const [data, setData] = useState<Work | null>(null);
     const params = useParams();
@@ -72,8 +64,9 @@ const Content: React.FC = () => {
                         </div>
                     </div>
                     <div className={styles.infoRight}>
-                        <LikeIcon />
-                        <GetInTouchIcon/>
+                        <div className={styles.likeAction}>
+                            <LikeIcon type = {'big'} workId={data.id}/>
+                        </div>
                     </div>
                 </div>
                 {/* 头图 */}
@@ -115,15 +108,6 @@ const Content: React.FC = () => {
     )
 }
 
-function LikeIcon () {
-    return(
-        <div className={styles.likeAction}>
-            <svg className={styles.likeIcon} xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none" role="img">
-                <path strokeWidth="1.5"  d="M10.7408 2C13.0889 2 14.6667 4.235 14.6667 6.32C14.6667 10.5425 8.11856 14 8.00004 14C7.88152 14 1.33337 10.5425 1.33337 6.32C1.33337 4.235 2.91115 2 5.2593 2C6.60745 2 7.48893 2.6825 8.00004 3.2825C8.51115 2.6825 9.39263 2 10.7408 2Z" stroke="currentColor" ></path>
-            </svg>
-        </div>
-    )
-}
 /*
 function MuteButton (){
     return(
