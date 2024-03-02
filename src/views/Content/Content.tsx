@@ -86,7 +86,7 @@ const Content: React.FC = () => {
                     </div>
                 </div> 
                 {/* 正文 */}
-                <div className={styles.contentContainer}>
+                <div className={styles.richtextContainer}>
                     <HtmlComp htmlContent={data.content}/>
                 </div>
                 {/* 介绍 */}
