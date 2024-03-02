@@ -13,8 +13,7 @@ h1 {
 }
 
 body {
-    min-width: 1000px;
-    overflow: auto;
+    overflow: hidden;
 }
 
 @font-face{

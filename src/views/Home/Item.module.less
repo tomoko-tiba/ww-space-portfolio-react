@@ -1,6 +1,19 @@
 .contentContainer {
-    width: calc((100% - 36px*2)/3);
+    width: calc((100% - 36px*3)/4);
     box-sizing: border-box;
+
+    @media (max-width: 1346px){
+        width: calc((100% - 36px*2)/3);
+    }
+
+    @media (max-width: 960px){
+        width: calc((100% - 36px)/2);
+    }
+
+    @media (max-width: 629px){
+        width: 100%;
+    }
+
 
     .shotContainer {
         height: 0;
@@ -83,6 +96,8 @@
 
                 .userPhoto {
                     width: 24px;
+                    height: 24px;
+                    object-fit: cover;
                     overflow: hidden;
                     border-radius: 50%;
                 }
