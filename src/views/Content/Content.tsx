@@ -1,76 +1,79 @@
-import styles from './Content.module.less'
-import { useEffect, useState } from 'react';
-import HtmlComp from './HtmlComp';
-import GetInTouchIcon from '@/components/GetInTouchIcon';
-import { Work, GetWorkById } from '@/api/works';
-import { useNavigate, useParams } from 'react-router-dom';
-import LikeIcon from '@/components/LikeIcon';
+import styles from "./Content.module.less";
+import { useEffect, useState } from "react";
+import HtmlComp from "./HtmlComp";
+import GetInTouchIcon from "@/components/GetInTouchIcon";
+import { Work, GetWorkById } from "@/api/works";
+import { useNavigate, useParams } from "react-router-dom";
+import LikeIcon from "@/components/LikeIcon";
 
 const Content: React.FC = () => {
-    // const [isMuted, setIsMuted] = useState(false);
-    const [data, setData] = useState<Work | null>(null);
-    const params = useParams();
-    const navigate = useNavigate();
-    
-    useEffect(() => {
-        let ignore = false;
+  // const [isMuted, setIsMuted] = useState(false);
+  const [data, setData] = useState<Work | null>(null);
+  const params = useParams();
+  const navigate = useNavigate();
 
-        GetWorkById(String(params.id)).then(res => {
-            if(ignore){
-                return;
-            }
-            setData(res.data); 
-            console.log('content 请求成功')
+  useEffect(() => {
+    let ignore = false;
 
-        }).catch( err => {
-            if(ignore){
-                return;
-            }
-            const res = err.response;
-            if(res?.status === 404){
-                console.log(404);
-                navigate('/404');
-            }
-        })
-
-        return ()=> {
-            ignore = true;
+    GetWorkById(String(params.id))
+      .then((res) => {
+        if (ignore) {
+          return;
         }
-    }, [params.id, navigate])
+        setData(res.data);
+        console.log("content 请求成功");
+      })
+      .catch((err) => {
+        if (ignore) {
+          return;
+        }
+        const res = err.response;
+        if (res?.status === 404) {
+          console.log(404);
+          navigate("/404");
+        }
+      });
 
-    return (
-        <>
-        {!data ? <div className={styles.loading}>Loading...</div> : 
+    return () => {
+      ignore = true;
+    };
+  }, [params.id, navigate]);
+
+  return (
+    <>
+      {!data ? (
+        <div className={styles.loading}>Loading...</div>
+      ) : (
         <div className={styles.main}>
-            <div className={styles.contentContainer}>
-                {/* 标题 */}
-                <div className={styles.title}>
-                    <span className={styles.titleText}>{data.title}</span>
+          <div className={styles.contentContainer}>
+            {/* 标题 */}
+            <div className={styles.title}>
+              <span className={styles.titleText}>{data.title}</span>
+            </div>
+            {/* 信息栏  */}
+            <div className={styles.infoBar}>
+              <div className={styles.info}>
+                <div className={styles.userPhoto}>
+                  <a href={data.userSrc}>
+                    <img src={data.userPhoto} />
+                  </a>
                 </div>
-                {/* 信息栏  */}
-                <div className={styles.infoBar}>
-                    <div className={styles.info}>
-                        <div className={styles.userPhoto}>
-                            <a href={data.userSrc}>
-                                <img src={data.userPhoto} />
-                            </a>
-                        </div>
-                        <div className={styles.details}>
-                            <div className={styles.userName}>{data.userName}</div>
-                            <div className={styles.status}>
-                                <span className={styles.like}>Likes:  {data.likes}</span>
-                                <span className={styles.time}>{data.time}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={styles.infoRight}>
-                        <div className={styles.likeAction}>
-                            <LikeIcon type = {'big'} workId={data.id}/>
-                        </div>
-                    </div>
+                <div className={styles.details}>
+                  <div className={styles.userName}>{data.userName}</div>
+                  <div className={styles.status}>
+                    <span className={styles.like}>Likes: {data.likes}</span>
+                    <span className={styles.time}>{data.time}</span>
+                  </div>
                 </div>
-                {/* 头图 */}
-                {/**  视频版
+              </div>
+              <div className={styles.infoRight}>
+                <div className={styles.likeAction}>
+                  <LikeIcon type={"big"} workId={data.id} />
+                </div>
+              </div>
+            </div>
+            {/* 头图 */}
+            {/**  视频版
                 <div className={styles.mediaHeader}>
                     <div className={styles.videoPlayer}>
                         <video className={styles.video} preload="auto" src="https://cdn.dribbble.com/userupload/12617184/file/original-ec1cf0981b84ce8e15c20f2422737ae4.mp4"  draggable="false" ></video>
@@ -80,33 +83,32 @@ const Content: React.FC = () => {
                         </div>
                     </div>
                 </div> */}
-                <div className={styles.mediaHeader}>
-                    <div className={styles.imgHeader}>
-                        <img src={data.imgSrc} ></img>
-                    </div>
-                </div> 
-                {/* 正文 */}
-                <div className={styles.richtextContainer}>
-                    <HtmlComp htmlContent={data.content}/>
-                </div>
-                {/* 介绍 */}
-                <div className={styles.userDetails}>
-                    <div className={styles.photo_detail}>
-                        <span className={styles.userLine}></span>
-                        <img src={data.userPhoto}></img>
-                        <span className={styles.userLine}></span>
-                    </div>
-                    <div className={styles.name_detail}>{data.userName}</div>
-                    <div className={styles.intro_detail}>{data.userIntro}</div>
-                    <GetInTouchIcon />
-                </div>
-                
+            <div className={styles.mediaHeader}>
+              <div className={styles.imgHeader}>
+                <img src={data.imgSrc}></img>
+              </div>
             </div>
+            {/* 正文 */}
+            <div className={styles.richtextContainer}>
+              <HtmlComp htmlContent={data.content} />
+            </div>
+            {/* 介绍 */}
+            <div className={styles.userDetails}>
+              <div className={styles.photo_detail}>
+                <span className={styles.userLine}></span>
+                <img src={data.userPhoto}></img>
+                <span className={styles.userLine}></span>
+              </div>
+              <div className={styles.name_detail}>{data.userName}</div>
+              <div className={styles.intro_detail}>{data.userIntro}</div>
+              <GetInTouchIcon />
+            </div>
+          </div>
         </div>
-        }
-        </>
-    )
-}
+      )}
+    </>
+  );
+};
 
 /*
 function MuteButton (){
