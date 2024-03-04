@@ -15,6 +15,11 @@
         justify-content: space-between;
         align-items: center;
 
+        @media(max-width: 920px){
+            flex-direction: column;
+            row-gap: 20px;
+        }
+
         .logo {
             width: 104px;
         }
@@ -23,6 +28,8 @@
             display: flex;
             gap: 12px;
             list-style: none;
+            flex-wrap: wrap;
+            justify-content: center;
             
             .link {
                 font-size: 14px;
@@ -48,8 +55,7 @@
         max-width: 1200px;
         display: flex;
         justify-content: space-between;
-        padding: 0 0;
-        margin-bottom: 20px;
+        padding: 44px 0;
 
         .lowerList {
             display: flex;
