@@ -10,10 +10,48 @@
         padding: 0 20px;
     }
 
+    .bar {
+        margin-top: 32px;
+
+        .categoryBar {
+            display: flex;
+            justify-content: center;
+            gap: 2px;
+            height: 36px;
+
+            .category {
+                font-family: "Mona Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+                font-weight: 600;
+                font-size: 14px;
+                line-height: 20px;
+                
+                a {
+                    display: flex;
+                    align-items: center;
+                    height: 100%;
+                    padding: 0 16px;
+                    color: #0d0c22;
+                    border-radius: 20px;
+
+                    &:hover {
+                        color: rgb(110, 109, 122);
+                    }
+                    
+                    &.active {
+                        background: #f8f7f4;
+                    }
+
+                }
+            }
+
+        }
+    }
+
     .contentsList {
         display: flex;
         flex-wrap: wrap;
         gap: 36px;
+        margin-top: 32px;
     }
 }
 
@@ -29,6 +67,8 @@
         width: 150px;
         height: 30px;
         border-radius: 20px;
+        background-color: #f8f7f4;;
+        border-width: 0px;
     }
 }
 

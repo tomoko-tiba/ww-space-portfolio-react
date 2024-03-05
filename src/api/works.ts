@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 export interface Work {
   id: number;
@@ -13,12 +13,14 @@ export interface Work {
   likes: number;
   views: number;
   time: string;
+  categoryId: number | null;
+  categoryName?: string;
 }
 
 export const getWorks = () => {
   return axios<Work[]>({
-    method: "GET",
-    url: "/backend/works",
+    method: 'GET',
+    url: '/backend/works',
   });
 };
 
@@ -26,6 +28,7 @@ export interface GetWorkByPagesProps {
   page: number;
   pageSize: number;
   searchText?: string;
+  categoryId?: number;
 }
 
 export interface GetWorkByPagesRes {
@@ -33,32 +36,29 @@ export interface GetWorkByPagesRes {
   data: Work[];
 }
 
-export const GetWorkByPage = ({
-  page,
-  pageSize,
-  searchText,
-}: GetWorkByPagesProps) => {
+export const GetWorkByPage = ({ page, pageSize, searchText, categoryId }: GetWorkByPagesProps) => {
   return axios<GetWorkByPagesRes>({
-    method: "GET",
-    url: "/backend/works/pages",
+    method: 'GET',
+    url: '/backend/works/pages',
     params: {
       page,
       pageSize,
       searchText,
+      categoryId,
     },
   });
 };
 
 export const GetWorkById = (id: string) => {
   return axios<Work>({
-    method: "GET",
+    method: 'GET',
     url: `/backend/works/${id}?flag=client`,
   });
 };
 
-export const like = (id: number, action: "like" | "unlike") => {
+export const like = (id: number, action: 'like' | 'unlike') => {
   return axios<void>({
-    method: "PUT",
+    method: 'PUT',
     url: `/backend/works/${id}/like`,
     data: { action },
   });

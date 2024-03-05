@@ -1,9 +1,10 @@
-import Item from "@/views/Home/Item";
-import styles from "./index.module.less";
-import { useState, LegacyRef, useEffect, useCallback } from "react";
-import { useInView } from "react-intersection-observer";
-import { GetWorkByPage, Work } from "@/api/works";
-import { useParams } from "react-router-dom";
+import Item from '@/views/Home/Item';
+import styles from './index.module.less';
+import { useState, LegacyRef, useEffect, useCallback } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { GetWorkByPage, Work } from '@/api/works';
+import { useParams } from 'react-router-dom';
+import { Category, getAllCategories } from '@/api/category';
 
 function Home() {
   const loadOnceAmount = 12;
@@ -18,19 +19,44 @@ function Home() {
   const [isFinished, setIsFinished] = useState(false);
   const isAutoLoad = (currPage - 1) % 3 !== 0;
 
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [categoryId, setCategoryId] = useState<number | undefined>();
+  // 首次获取分类数据
+  useEffect(() => {
+    let ignore = false;
+    getAllCategories().then((res) => {
+      if (ignore) return;
+      setCategories(res.data);
+    });
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  const categoryLi = categories.map((c, i) => {
+    return (
+      <li className={styles.category}>
+        <a className={`${categoryId === i ? styles.active : ''}`} onClick={() => setCategoryId(i)}>
+          {c.name}
+        </a>
+      </li>
+    );
+  });
+
   const params = useParams();
 
   useEffect(() => {
     let ignore = false;
     setIsLoading(true);
     setIsFinished(false);
-    console.log("currPage :" + currPage);
-    console.log("search and first fetch");
+    console.log('currPage :' + currPage);
+    console.log('search and first fetch');
     // 这里没有办法直接使用fetchPageData()替代,因为无法使用ignore阻止两次运行fetch data
     GetWorkByPage({
       page: 1,
       pageSize: loadOnceAmount,
       searchText: params.text,
+      categoryId: categoryId,
     }).then((res) => {
       if (ignore) return;
       const data = res.data;
@@ -39,21 +65,21 @@ function Home() {
       setVisibleData([...pageData]);
       setIsFinished(count / loadOnceAmount <= 1);
       setIsLoading(false);
-      console.log(params.text + "  " + typeof params.text);
-      console.log("搜索数据成功！");
+      console.log(params.text + '  ' + typeof params.text);
+      console.log('搜索数据成功！');
       setCurrPage(2);
     });
     return () => {
       ignore = true;
     };
-  }, [params.text]);
+  }, [params.text, categoryId]);
 
   const { ref } = useInView({
     threshold: 0,
     triggerOnce: true,
     onChange(inView) {
       if (inView) {
-        console.log("inView");
+        console.log('inView');
         setIsLoading(true);
         if (currPage > 1 && isAutoLoad) fetchPageData(currPage);
       }
@@ -66,7 +92,7 @@ function Home() {
       if (isFinished && isLoading) {
         return;
       }
-      console.log("Try to fetch");
+      console.log('Try to fetch');
       GetWorkByPage({
         page: pageCount,
         pageSize: loadOnceAmount,
@@ -82,41 +108,29 @@ function Home() {
         }
         setIsFinished(currPage >= count / loadOnceAmount);
         setIsLoading(false);
-        console.log("fetch成功！本次加载数据的页码是", currPage);
+        console.log('fetch成功！本次加载数据的页码是', currPage);
         setCurrPage(pageCount + 1);
       });
     },
     [currPage, isFinished, isLoading, params.text, visibleData],
   );
-  /*
-    function fetchPageData (){
-        if(isFinished && isLoading){
-            return
-        }
-        console.log('Try to fetch');
-        GetWorkByPage({
-            page: currPage,
-            pageSize: loadOnceAmount,
-            searchText: params.text
-        }).then(res => {
-            const data = res.data;
-            const pageData = data.data;
-            const count = data.count;
-            if(currPage === 1) {
-                setVisibleData([...pageData]);
-            }else {
-                setVisibleData([...visibleData, ...pageData]);
-            }
-            setIsFinished(currPage >= count/loadOnceAmount - 1);
-            setIsLoading(false);
-            console.log('fetch成功！本次加载数据的页码是', currPage);
-            setCurrPage(c => c+1);
-        })
-    }*/
 
   return (
     <>
       <div className={styles.main}>
+        <div className={styles.bar}>
+          <ul className={styles.categoryBar}>
+            <li className={styles.category}>
+              <a
+                className={`${categoryId === undefined ? styles.active : ''}`}
+                onClick={() => setCategoryId(undefined)}
+              >
+                Discover
+              </a>
+            </li>
+            {categoryLi}
+          </ul>
+        </div>
         <ol className={styles.contentsList}>
           {visibleData.map((data) => (
             <Item
@@ -131,7 +145,7 @@ function Home() {
                     return {
                       ...item,
                       likes:
-                        action === "unlike"
+                        action === 'unlike'
                           ? item.likes > 0
                             ? item.likes - 1
                             : 0
@@ -146,16 +160,11 @@ function Home() {
       </div>
       <div className={styles.loadMoreButton}>
         {!isAutoLoad && (
-          <div className={styles.loadMoreButton}>
-            <button
-              className={styles.button}
-              onClick={() => fetchPageData(currPage)}
-            >
-              Load more work
-            </button>
-          </div>
+          <button className={styles.button} onClick={() => fetchPageData(currPage)}>
+            Load more work
+          </button>
         )}
-        {isLoading && !isFinished && isAutoLoad && "Loading"}
+        {isLoading && !isFinished && isAutoLoad && 'Loading'}
         {!isLoading && !isFinished && <DetectLoadingArea detectRef={ref} />}
       </div>
     </>
