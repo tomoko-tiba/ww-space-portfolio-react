@@ -12,6 +12,9 @@ h1 {
     margin: 0 0;
 }
 
+button {
+    font-family: "Mona Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 
 @font-face{
     font-family: 'Mona Sans';

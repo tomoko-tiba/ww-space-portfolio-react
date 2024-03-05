@@ -1,7 +1,7 @@
-import { like } from "@/api/works";
-import { useLikeMap } from "@/store/useLikeMap";
-import styles from "./LikeIcon.module.less";
-import classNames from "classnames";
+import { like } from '@/api/works';
+import { useLikeMap } from '@/store/useLikeMap';
+import styles from './LikeIcon.module.less';
+import classNames from 'classnames';
 
 interface likeIconProps {
   type: string;
@@ -16,17 +16,16 @@ const LikeIcon: React.FC<likeIconProps> = (props) => {
 
   return (
     <div
-      className={classNames(
-        type === "small" ? styles.smallLike : styles.bigLike,
-        { [styles.active]: isLike },
-      )}
+      className={classNames(type === 'small' ? styles.smallLike : styles.bigLike, {
+        [styles.active]: isLike,
+      })}
       onClick={(e) => {
         e.stopPropagation();
-        const action = isLike ? "unlike" : "like";
+        const action = isLike ? 'unlike' : 'like';
         like(workId, action).then(() => {
           isLike ? handleUnlike(workId) : handleLike(workId);
           onChange && onChange(action);
-          console.log("点赞成功");
+          console.log('点赞成功');
         });
       }}
     >

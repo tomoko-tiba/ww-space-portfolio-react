@@ -1,8 +1,8 @@
-import logoSvg from "../assets/pics/logo.svg";
-import searchIcon from "../assets/pics/searchIcon.svg";
-import styles from "./Header.module.less";
-import { useNavigate } from "react-router-dom";
-import { KeyboardEvent } from "react";
+import logoSvg from '../assets/pics/logo.svg';
+import searchIcon from '../assets/pics/searchIcon.svg';
+import styles from './Header.module.less';
+import { useNavigate } from 'react-router-dom';
+import { KeyboardEvent } from 'react';
 
 interface HeaderProps {
   searchValue: string;
@@ -17,15 +17,15 @@ const Header: React.FC<HeaderProps> = ({ searchValue, onSearchChange }) => {
     // console.log('Search submitted:', searchTerm);
     e.preventDefault(); //不加的话就会重新加载整个app 即无法储存当前searchValue
     if (searchValue) {
-      const navPath = "/Search/" + searchValue;
+      const navPath = '/Search/' + searchValue;
       navigate(navPath);
     } else {
-      navigate("/");
+      navigate('/');
     }
   };
 
   const handleBackToHome = () => {
-    navigate("/");
+    navigate('/');
   };
 
   return (
@@ -33,14 +33,14 @@ const Header: React.FC<HeaderProps> = ({ searchValue, onSearchChange }) => {
       <div className={styles.navbar}>
         <img className={styles.logo} src={logoSvg} onClick={handleBackToHome} />
         <div className={styles.right}>
-          <form className={styles["search-bar"]}>
+          <form className={styles['search-bar']}>
             <img className={styles.search_icon} src={searchIcon} />
             <input
               className={styles.search_input}
               value={searchValue}
               placeholder="Search..."
               autoComplete="off"
-              onKeyDown={(e) => e.key === "Enter" && handleSearchSubmit(e)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSearchSubmit(e)}
               onChange={(e) => onSearchChange(e.target.value)}
             />
           </form>
