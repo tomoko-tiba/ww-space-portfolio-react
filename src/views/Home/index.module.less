@@ -11,23 +11,77 @@
     }
 
     .bar {
+        width: 100%;
+        margin: 0 auto;
+        scroll-behavior: smooth;
         margin-top: 32px;
+        position: relative;
+        display: flex;
+   
+        max-width: 600px;
+
+        .scroll_backward {
+            a{
+                display: flex;
+                justify-content: flex-start;
+                position: absolute;
+                left: 0;
+                width: 36px;
+                height: 36px;
+                background: transparent;
+                background-image: -webkit-gradient(linear, right top, left top, from(rgba(255, 255, 255, 0)), color-stop(50%, white));
+                --box-background-blur: blur(25px) brightness(3);
+                .search_icon {
+                    transform: rotate(90deg);
+                    width: 14px;
+                    height: 14px;
+                    margin: auto 0;
+                }
+            }
+        }
+
+        .scroll_forward {
+            
+            a{
+                display: flex;
+                justify-content: flex-end;
+                position: absolute;
+                right: 0;
+                width: 36px;
+                height: 36px;
+                background: transparent;
+                background-image: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0)), color-stop(50%, white));
+                --box-background-blur: blur(25px) brightness(3);
+
+                .search_icon {
+                    transform: rotate(-90deg);
+                    width: 14px;
+                    height: 14px;
+                    margin: auto 0;
+                }
+            }
+        }
 
         .categoryBar {
             display: flex;
-            justify-content: center;
-            gap: 2px;
+            column-gap: 2px;
+            max-width: 600px;
             height: 36px;
+            margin: 0 auto;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scrollbar-width: none;
 
             .category {
                 font-family: "Mona Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
                 font-weight: 600;
                 font-size: 14px;
-                line-height: 20px;
+                white-space: nowrap;
                 
                 a {
                     display: flex;
                     align-items: center;
+                    width: auto;
                     height: 100%;
                     padding: 0 16px;
                     color: #0d0c22;

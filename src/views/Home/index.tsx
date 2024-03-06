@@ -1,10 +1,11 @@
 import Item from '@/views/Home/Item';
 import styles from './index.module.less';
-import { useState, LegacyRef, useEffect, useCallback } from 'react';
+import { useState, LegacyRef, useEffect, useCallback, useRef, createRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { GetWorkByPage, Work } from '@/api/works';
 import { useParams } from 'react-router-dom';
 import { Category, getAllCategories } from '@/api/category';
+import scrollIcon from '@/assets/pics/scrollIcon.svg';
 
 function Home() {
   const loadOnceAmount = 12;
@@ -35,7 +36,7 @@ function Home() {
 
   const categoryLi = categories.map((c, i) => {
     return (
-      <li className={styles.category}>
+      <li className={styles.category} key={i + 1}>
         <a className={`${categoryId === i ? styles.active : ''}`} onClick={() => setCategoryId(i)}>
           {c.name}
         </a>
@@ -115,12 +116,68 @@ function Home() {
     [currPage, isFinished, isLoading, params.text, visibleData],
   );
 
+  const [scroll, setScroll] = useState<number | null>(null);
+  const scrollBarRef = useRef(null);
+  //const [scrollBarWidth, setScrollBarWidth] = useState(0);
+  /*
+  const scrollBarWidth = scrollBarRef.current.offsetWidth;
+  if (scrollBarWidth <= 570) {
+    console.log('scrollbar true');
+  }*/
+
+  useEffect(() => {
+    if (!scrollBarRef.current) return;
+
+    const observer = new ResizeObserver((entries) => {
+      const { width } = entries[0].contentRect;
+      console.log('scrollBarWidth: ' + width);
+      if (width > 570) {
+        setScroll(null);
+      } else if (width <= 570) {
+        setScroll(0);
+      }
+    });
+    observer.observe(scrollBarRef.current);
+  }, [scrollBarRef]);
+
+  const handleBackwardScroll = () => {
+    const ref = scrollBarRef.current;
+    ref.scrollTo({
+      left: -ref.offsetWidth,
+      behavior: 'smooth', // 使用平滑滚动效果
+    });
+    setScroll(0);
+  };
+
+  const handleForwardScroll = () => {
+    const ref = scrollBarRef.current;
+    ref.scrollTo({
+      left: ref.offsetWidth,
+      behavior: 'smooth', // 使用平滑滚动效果
+    });
+    setScroll(1);
+  };
+
   return (
     <>
       <div className={styles.main}>
         <div className={styles.bar}>
-          <ul className={styles.categoryBar}>
-            <li className={styles.category}>
+          {scroll === 1 && (
+            <span className={styles.scroll_backward}>
+              <a onClick={handleBackwardScroll}>
+                <img className={styles.search_icon} src={scrollIcon} />
+              </a>
+            </span>
+          )}
+          {scroll === 0 && (
+            <span className={styles.scroll_forward}>
+              <a onClick={handleForwardScroll}>
+                <img className={styles.search_icon} src={scrollIcon} />
+              </a>
+            </span>
+          )}
+          <ul className={styles.categoryBar} ref={scrollBarRef}>
+            <li className={styles.category} key={0}>
               <a
                 className={`${categoryId === undefined ? styles.active : ''}`}
                 onClick={() => setCategoryId(undefined)}
