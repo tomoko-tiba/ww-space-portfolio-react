@@ -1,6 +1,6 @@
 import Item from '@/views/Home/Item';
 import styles from './index.module.less';
-import { useState, LegacyRef, useEffect, useCallback, useRef, createRef } from 'react';
+import { useState, LegacyRef, useEffect, useCallback, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { GetWorkByPage, Work } from '@/api/works';
 import { useParams } from 'react-router-dom';
@@ -117,20 +117,14 @@ function Home() {
   );
 
   const [scroll, setScroll] = useState<number | null>(null);
-  const scrollBarRef = useRef(null);
-  //const [scrollBarWidth, setScrollBarWidth] = useState(0);
-  /*
-  const scrollBarWidth = scrollBarRef.current.offsetWidth;
-  if (scrollBarWidth <= 570) {
-    console.log('scrollbar true');
-  }*/
+  const scrollBarRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
     if (!scrollBarRef.current) return;
 
     const observer = new ResizeObserver((entries) => {
       const { width } = entries[0].contentRect;
-      console.log('scrollBarWidth: ' + width);
+      // console.log('scrollBarWidth: ' + width);
       if (width > 570) {
         setScroll(null);
       } else if (width <= 570) {
@@ -142,20 +136,35 @@ function Home() {
 
   const handleBackwardScroll = () => {
     const ref = scrollBarRef.current;
+    if (!ref) return;
     ref.scrollTo({
-      left: -ref.offsetWidth,
+      left: ref.scrollLeft - 100,
       behavior: 'smooth', // 使用平滑滚动效果
     });
-    setScroll(0);
+    setTimeout(() => {
+      if (ref.scrollLeft <= 1) {
+        setScroll(0);
+      }
+    }, 300);
   };
 
   const handleForwardScroll = () => {
     const ref = scrollBarRef.current;
+    if (!ref) return;
     ref.scrollTo({
-      left: ref.offsetWidth,
+      left: ref.scrollLeft + 100, // 跳到左边的_值
       behavior: 'smooth', // 使用平滑滚动效果
     });
-    setScroll(1);
+
+    setTimeout(() => {
+      /*
+      console.log(ref.scrollLeft);
+      console.log(ref.offsetWidth);
+      console.log(ref.scrollWidth);*/
+      if (ref.scrollLeft + ref.offsetWidth >= ref.scrollWidth - 2) {
+        setScroll(1);
+      }
+    }, 300);
   };
 
   return (
