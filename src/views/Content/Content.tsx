@@ -70,6 +70,7 @@ const Content: React.FC = () => {
                 <div className={styles.likeAction}>
                   <LikeIcon type={'big'} workId={data.id} outlined={true} />
                 </div>
+                <GetInTouchIcon />
               </div>
             </div>
             {/* 头图 */}

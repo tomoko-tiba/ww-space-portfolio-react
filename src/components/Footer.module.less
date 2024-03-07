@@ -10,45 +10,44 @@
     .upperContainer {
         width: 100%;
         max-width: 1200px;
-        padding: 72px 0 44px 0;
+        padding: 72px 0 0 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
 
-        @media(max-width: 920px){
-            flex-direction: column;
-            row-gap: 20px;
-        }
 
         .logo {
-            width: 104px;
+            width: 60px;
         }
 
-        .links{
+        .right {
             display: flex;
-            gap: 12px;
-            list-style: none;
-            flex-wrap: wrap;
-            justify-content: center;
-            
-            .link {
-                font-size: 14px;
-                text-decoration: none;
-                color: #0d0c22;
-                font-weight: 600;
-                font-feature-settings: 'ss01';
+            flex-direction: column;
+            align-items: flex-end;
+            row-gap: 6px;
+
+            .links{
+                display: flex;
+                gap: 12px;
+                list-style: none;
+                flex-wrap: wrap;
+                justify-content: center;
+                
+                li {
+                    font-size: 14px;
+                    color: #0d0c22;
+                    font-weight: 600;
+                    font-feature-settings: 'ss01';
+    
+                    a {
+                        text-decoration: none;
+                    }
+                }
             }
         }
 
-        .socialLinks {
-            display: flex;
-            gap: 16px;
 
-            .socialLink {
-                width: 18px;
-                height: 18px;
-            }
-        }
+
     }
     .lowerContainer {
         width: 100%;
@@ -59,12 +58,19 @@
 
         .lowerList {
             display: flex;
-            justify-content: start;
+            justify-content: flex-end;
             gap: 16px;
             list-style: none;
             color: #6e6d7a;
             font-size: 14px;
             line-height: 20px;
+
+            .icon {
+                width: 18px;
+                height: 18px;
+                fill: currentColor;
+                
+            }
 
             a {
                 text-decoration: none;
