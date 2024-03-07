@@ -85,6 +85,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        height: 20px;
 
         .userInfo {
             overflow: hidden;
@@ -114,6 +115,39 @@
                     margin-left: 8px;
                     color: #0d0c22;
                 }
+            }
+        }
+
+        .tags {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            column-gap: 8px;
+            height: 100%;
+
+            color: #4b4b4b;
+            font-family: "Mona Sans";
+            font-size: 12px;
+            white-space: nowrap;
+            font-weight: 600;
+            font-feature-settings: 'ss01';
+
+            .timeTag {
+                background-color: #ffebf7;
+                color: #a2486d;
+                line-height: 21px;
+                height: 100%;
+                padding: 0 8px;
+                border-radius: 6px;
+            
+            }
+
+            .categoryTag{
+                background-color: #e8e8e8;
+                line-height: 21px;
+                height: 100%;
+                padding: 0 8px;
+                border-radius: 6px;
             }
         }
         .statistics {

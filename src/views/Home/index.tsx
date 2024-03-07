@@ -116,19 +116,21 @@ function Home() {
     [currPage, isFinished, isLoading, params.text, visibleData],
   );
 
-  const [scroll, setScroll] = useState<number | null>(null);
+  // const [scroll, setScroll] = useState<number | null>(null);
+  const [scrollL, setScrollL] = useState<boolean>(false);
+  const [scrollR, setScrollR] = useState<boolean>(false);
   const scrollBarRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
     if (!scrollBarRef.current) return;
-
     const observer = new ResizeObserver((entries) => {
       const { width } = entries[0].contentRect;
       // console.log('scrollBarWidth: ' + width);
       if (width > 570) {
-        setScroll(null);
+        setScrollL(false);
+        setScrollR(false);
       } else if (width <= 570) {
-        setScroll(0);
+        setScrollR(true);
       }
     });
     observer.observe(scrollBarRef.current);
@@ -138,13 +140,14 @@ function Home() {
     const ref = scrollBarRef.current;
     if (!ref) return;
     ref.scrollTo({
-      left: ref.scrollLeft - 100,
+      left: ref.scrollLeft - ref.offsetWidth - 20,
       behavior: 'smooth', // 使用平滑滚动效果
     });
     setTimeout(() => {
       if (ref.scrollLeft <= 1) {
-        setScroll(0);
+        setScrollL(false);
       }
+      setScrollR(true);
     }, 300);
   };
 
@@ -152,7 +155,7 @@ function Home() {
     const ref = scrollBarRef.current;
     if (!ref) return;
     ref.scrollTo({
-      left: ref.scrollLeft + 100, // 跳到左边的_值
+      left: ref.scrollLeft + ref.offsetWidth - 20, // 跳到左边的_值
       behavior: 'smooth', // 使用平滑滚动效果
     });
 
@@ -162,8 +165,9 @@ function Home() {
       console.log(ref.offsetWidth);
       console.log(ref.scrollWidth);*/
       if (ref.scrollLeft + ref.offsetWidth >= ref.scrollWidth - 2) {
-        setScroll(1);
+        setScrollR(false);
       }
+      setScrollL(true);
     }, 300);
   };
 
@@ -171,14 +175,14 @@ function Home() {
     <>
       <div className={styles.main}>
         <div className={styles.bar}>
-          {scroll === 1 && (
+          {scrollL && (
             <span className={styles.scroll_backward}>
               <a onClick={handleBackwardScroll}>
                 <img className={styles.search_icon} src={scrollIcon} />
               </a>
             </span>
           )}
-          {scroll === 0 && (
+          {scrollR && (
             <span className={styles.scroll_forward}>
               <a onClick={handleForwardScroll}>
                 <img className={styles.search_icon} src={scrollIcon} />

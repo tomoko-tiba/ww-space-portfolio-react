@@ -14,9 +14,10 @@
         width: 100%;
         margin: 0 auto;
         scroll-behavior: smooth;
-        margin-top: 32px;
+        margin-top: 20px;
         position: relative;
         display: flex;
+        overflow: hidden;
    
         max-width: 600px;
 
@@ -62,6 +63,10 @@
             }
         }
 
+        .categoryBar::-webkit-scrollbar {
+            display: none;
+        }
+
         .categoryBar {
             display: flex;
             column-gap: 2px;
@@ -105,7 +110,7 @@
         display: flex;
         flex-wrap: wrap;
         gap: 36px;
-        margin-top: 32px;
+        margin-top: 16px;
     }
 }
 

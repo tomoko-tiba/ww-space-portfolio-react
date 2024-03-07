@@ -1,6 +1,6 @@
-import styles from "./Item.module.less";
-import { useNavigate } from "react-router-dom";
-import LikeIcon from "@/components/LikeIcon";
+import styles from './Item.module.less';
+import { useNavigate } from 'react-router-dom';
+import LikeIcon from '@/components/LikeIcon';
 export interface Data {
   id: number;
   userName: string;
@@ -11,6 +11,8 @@ export interface Data {
   itemLink: string;
   likes: number;
   views: number;
+  time?: string;
+  categoryName?: string;
 }
 
 interface itemProps {
@@ -27,8 +29,8 @@ const Item: React.FC<itemProps> = (props) => {
   const navigate = useNavigate();
 
   function toDetail() {
-    console.log("请求id为" + data.id);
-    const navPath: string = "/Content/" + data.id;
+    console.log('请求id为' + data.id);
+    const navPath: string = '/Content/' + data.id;
     navigate(navPath);
   }
 
@@ -42,22 +44,28 @@ const Item: React.FC<itemProps> = (props) => {
           <div className={styles.overlayContent}>
             <div className={styles.title}>{data.title}</div>
             <div className={styles.likeAction}>
-              <LikeIcon type={"big"} workId={data.id} onChange={onLikeChange} />
+              <LikeIcon type={'big'} workId={data.id} onChange={onLikeChange} />
             </div>
           </div>
         </div>
       </div>
 
       <div className={styles.detailsContainer}>
-        <div className={styles.userInfo}>
+        {/**  原始样式 用户信息
+         <div className={styles.userInfo}>
           <a className={styles.hoverableUrl} href={data.userSrc}>
             <img className={styles.userPhoto} src={data.userPhoto} />
             <span className={styles.userName}>{data.userName}</span>
           </a>
         </div>
+        */}
+        <div className={styles.tags}>
+          {data.time && <span className={styles.timeTag}>{data.time}</span>}
+          {data.categoryName && <span className={styles.categoryTag}>{data.categoryName}</span>}
+        </div>
         <div className={styles.statistics}>
           <div className={styles.likeState}>
-            <LikeIcon type={"small"} workId={data.id} onChange={onLikeChange} />
+            <LikeIcon type={'small'} workId={data.id} onChange={onLikeChange} />
             <span className={styles.likeCount}>{data.likes}</span>
           </div>
           <div className={styles.viewState}>
