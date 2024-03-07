@@ -7,18 +7,23 @@ interface likeIconProps {
   type: string;
   workId: number;
   onChange?: (action: string) => void;
+  outlined?: boolean;
 }
 
 const LikeIcon: React.FC<likeIconProps> = (props) => {
-  const { type, workId, onChange } = props;
+  const { type, workId, onChange, outlined } = props;
   const { likeMap, handleLike, handleUnlike } = useLikeMap();
   const isLike = !!likeMap[workId];
 
   return (
     <div
-      className={classNames(type === 'small' ? styles.smallLike : styles.bigLike, {
-        [styles.active]: isLike,
-      })}
+      className={classNames(
+        type === 'small' ? styles.smallLike : styles.bigLike,
+        {
+          [styles.active]: isLike,
+        },
+        outlined && styles.outlined,
+      )}
       onClick={(e) => {
         e.stopPropagation();
         const action = isLike ? 'unlike' : 'like';

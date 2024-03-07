@@ -1,10 +1,10 @@
-import styles from "./Content.module.less";
-import { useEffect, useState } from "react";
-import HtmlComp from "./HtmlComp";
-import GetInTouchIcon from "@/components/GetInTouchIcon";
-import { Work, GetWorkById } from "@/api/works";
-import { useNavigate, useParams } from "react-router-dom";
-import LikeIcon from "@/components/LikeIcon";
+import styles from './Content.module.less';
+import { useEffect, useState } from 'react';
+import HtmlComp from './HtmlComp';
+import GetInTouchIcon from '@/components/GetInTouchIcon';
+import { Work, GetWorkById } from '@/api/works';
+import { useNavigate, useParams } from 'react-router-dom';
+import LikeIcon from '@/components/LikeIcon';
 
 const Content: React.FC = () => {
   // const [isMuted, setIsMuted] = useState(false);
@@ -21,7 +21,7 @@ const Content: React.FC = () => {
           return;
         }
         setData(res.data);
-        console.log("content 请求成功");
+        console.log('content 请求成功');
       })
       .catch((err) => {
         if (ignore) {
@@ -30,7 +30,7 @@ const Content: React.FC = () => {
         const res = err.response;
         if (res?.status === 404) {
           console.log(404);
-          navigate("/404");
+          navigate('/404');
         }
       });
 
@@ -62,13 +62,13 @@ const Content: React.FC = () => {
                   <div className={styles.userName}>{data.userName}</div>
                   <div className={styles.status}>
                     <span className={styles.like}>Likes: {data.likes}</span>
-                    <span className={styles.time}>{data.time}</span>
+                    <span className={styles.time}>项目时间: {data.time}</span>
                   </div>
                 </div>
               </div>
               <div className={styles.infoRight}>
                 <div className={styles.likeAction}>
-                  <LikeIcon type={"big"} workId={data.id} />
+                  <LikeIcon type={'big'} workId={data.id} outlined={true} />
                 </div>
               </div>
             </div>

@@ -28,6 +28,7 @@
     align-items: center;
     border-radius: 50%;
     color: #0d0c22;
+    border: 0px;
 
     .likeIcon {
         width: 16px;
@@ -36,10 +37,17 @@
 
     &:hover {
         color: #6e6d7a;
+        border-color: #dbdbde;
+    }
+
+    &.outlined {
+        border: 1.5px solid #e7e7e9;
     }
 
     &.active {
         background-color: #fdf0fb;
+        border: 0px;
+
         .likeIcon {
             color: #ea64d9;
             fill: currentColor;
