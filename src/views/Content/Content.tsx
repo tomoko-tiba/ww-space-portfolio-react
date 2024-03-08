@@ -97,7 +97,9 @@ const Content: React.FC = () => {
             <div className={styles.userDetails}>
               <div className={styles.photo_detail}>
                 <span className={styles.userLine}></span>
-                <img src={data.userPhoto}></img>
+                <div className={styles.userPhotoBelow}>
+                  <img src={data.userPhoto}></img>
+                </div>
                 <span className={styles.userLine}></span>
               </div>
               <div className={styles.name_detail}>{data.userName}</div>
