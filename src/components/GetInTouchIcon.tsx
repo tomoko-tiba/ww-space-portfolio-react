@@ -1,6 +1,26 @@
 import styles from './GetInTouchIcon.module.less';
 
-const GetInTouchIcon: React.FC = () => {
+interface getInTouchProps {
+  mediaQuery?: boolean;
+}
+
+const GetInTouchIcon: React.FC<getInTouchProps> = (props) => {
+  const { mediaQuery } = props;
+
+  return (
+    <>
+      {mediaQuery ? (
+        <div className={styles.mediaQuery}>
+          <Icon />
+        </div>
+      ) : (
+        <Icon />
+      )}
+    </>
+  );
+};
+
+const Icon = () => {
   return (
     <a className={styles.buttonLink} href="mailto:yenny00001@163.com">
       <div className={styles.button}>
