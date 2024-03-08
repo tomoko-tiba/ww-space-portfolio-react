@@ -1,7 +1,6 @@
 import logoSvg from '@/assets/pics/logo.svg';
 import logoSvg2 from '@/assets/pics/logo2.svg';
 import styles from './Footer.module.less';
-import email from '@/assets/pics/email.svg';
 
 const Footer: React.FC = () => {
   return (
