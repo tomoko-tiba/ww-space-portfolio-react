@@ -30,7 +30,7 @@ const Item: React.FC<itemProps> = (props) => {
 
   function toDetail() {
     console.log('请求id为' + data.id);
-    const navPath: string = '/Content/' + data.id;
+    const navPath: string = '/content/' + data.id;
     navigate(navPath);
   }
 
