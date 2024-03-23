@@ -21,6 +21,7 @@ const Content: React.FC = () => {
           return;
         }
         setData(res.data);
+        document.title = `${res.data.title}-ww-space`;
         console.log('content 请求成功');
       })
       .catch((err) => {
@@ -33,7 +34,6 @@ const Content: React.FC = () => {
           navigate('/404');
         }
       });
-    document.title = `${data?.title}-ww-space`;
 
     return () => {
       ignore = true;

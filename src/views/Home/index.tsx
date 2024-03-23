@@ -28,6 +28,7 @@ function Home() {
     getAllCategories().then((res) => {
       if (ignore) return;
       setCategories(res.data);
+      document.title = 'ww-space';
     });
     return () => {
       ignore = true;
