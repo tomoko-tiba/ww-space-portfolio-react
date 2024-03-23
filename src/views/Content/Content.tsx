@@ -33,6 +33,7 @@ const Content: React.FC = () => {
           navigate('/404');
         }
       });
+    document.title = `${data?.title}-ww-space`;
 
     return () => {
       ignore = true;
