@@ -7,6 +7,7 @@ interface HtmlComp {
 }
 function HtmlComp({ htmlContent }: HtmlComp) {
   const ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const viewer = ref.current ? new Viewer(ref.current, {}) : null;
     return () => {

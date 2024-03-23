@@ -1,6 +1,6 @@
-import { persist, createJSONStorage } from "zustand/middleware";
-import { immer } from "zustand/middleware/immer";
-import { create } from "zustand";
+import { persist, createJSONStorage } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer';
+import { create } from 'zustand';
 
 interface LikeMap {
   [key: number]: boolean;
@@ -34,7 +34,7 @@ export const useLikeMap = create(
       }),
       // 配置储存到浏览器缓存
       {
-        name: "user-like-map-storage",
+        name: 'user-like-map-storage',
         storage: createJSONStorage(() => localStorage),
       },
     ),
