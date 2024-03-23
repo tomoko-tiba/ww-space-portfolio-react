@@ -37,7 +37,10 @@ function Home() {
   const categoryLi = categories.map((c, i) => {
     return (
       <li className={styles.category} key={i + 1}>
-        <a className={`${categoryId === i ? styles.active : ''}`} onClick={() => setCategoryId(i)}>
+        <a
+          className={`${categoryId === c.id ? styles.active : ''}`}
+          onClick={() => setCategoryId(c.id)}
+        >
           {c.name}
         </a>
       </li>
