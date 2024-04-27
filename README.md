@@ -1,30 +1,27 @@
-# React + TypeScript + Vite
+# ww-space 作品集展示项目 - 管理后台
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+这个项目模仿了dribbble网页设计的视觉效果（ps仅作为练习使用），使用 React + Node.js 搭建的个人作品展示项目。项目分为前台、后台、服务端三个代码仓，整体都使用 TypeScript 开发，并配置了 Eslint + Prettier 进行代码风格规范优化。
 
-Currently, two official plugins are available:
+🟢 本仓库为前台部分。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+#### 查看前台与服务端:   [⚛ 管理后台](https://github.com/tomoko-tiba/ww-space-portfolio-react/tree/master)  [⚙ 服务端](https://github.com/tomoko-tiba/ww-space-backend-express/tree/main)
 
-## Expanding the ESLint configuration
+## 管理后台介绍
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+#### https://yenny.wang/
 
-- Configure the top-level `parserOptions` property like this:
+- 通过 Vite 从零搭建的 React 项目
+- 使用 React Router 的 history 模式配置了列表、详情、搜索、404 等页面。
+- 封装了公共头部等布局组件。使用 axios 进行后端接口调用，列表支持用户下拉无限滚动分页加载。
+- 使用 CSS 媒体查询实现移动端响应式效果。
+- 使用 Zustand 进行全局状态管理，维护列表页和详情页中共用的用户点赞状态。
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+## 使用
+
 ```
+# install dependency
+npm install
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+# develop
+npm run dev
+```
