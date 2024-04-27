@@ -1,4 +1,4 @@
-# ww-space 作品集展示项目 - 管理后台
+# ww-space 作品集展示项目 - 前台
 
 这个项目模仿了dribbble网页设计的视觉效果（ps仅作为练习使用），使用 React + Node.js 搭建的个人作品展示项目。项目分为前台、后台、服务端三个代码仓，整体都使用 TypeScript 开发，并配置了 Eslint + Prettier 进行代码风格规范优化。
 
